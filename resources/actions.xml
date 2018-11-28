@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+	<action name="department" className="com.wangzunbin.crm.web.action.DepartmentAction" method="execute"/>
+	<action name="employee" className="com.wangzunbin.crm.web.action.EmployeeAction" method="execute"/>
+</actions>

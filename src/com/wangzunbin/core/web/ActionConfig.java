@@ -1,11 +1,22 @@
 package com.wangzunbin.core.web;
 
+import java.util.Map;
+
 public class ActionConfig {
 
 	private String name; //路径名称
 	private String className; // 全限定名
 	private String method; // 方法名称
 	
+	private Map<String, ActionResult> map;
+	
+	
+	public Map<String, ActionResult> getMap() {
+		return map;
+	}
+	public void setMap(Map<String, ActionResult> map) {
+		this.map = map;
+	}
 	
 	public String getName() {
 		return name;
@@ -33,8 +44,9 @@ public class ActionConfig {
 	}
 	@Override
 	public String toString() {
-		return "ActionConfig [name=" + name + ", className=" + className + ", method=" + method + "]";
+		return "ActionConfig [name=" + name + ", className=" + className + ", method=" + method + ", map=" + map + "]";
 	}
+	
 
 	
 }

@@ -4,7 +4,8 @@ import com.wangzunbin.core.web.ActionContext;
 
 public class DepartmentAction {
 
-	public void execute() {
+	public String execute() {
 		System.out.println("..获取的参数: + " + ActionContext.getCtx().getReq().getParameter("name"));
+		return "list";
 	}
 }

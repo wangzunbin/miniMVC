@@ -23,6 +23,7 @@ import org.w3c.dom.NodeList;
 
 import com.wangzunbin.core.web.ActionConfig;
 import com.wangzunbin.core.web.ActionContext;
+import com.wangzunbin.core.web.ActionResult;
 
 
 
@@ -48,6 +49,16 @@ public class ActionFilter implements Filter{
 			String method = actionEl.getAttribute("method");
 			ActionConfig config = new ActionConfig(name, className, method);
 			actionConfigs.put(name, config);
+			NodeList resultNodeList = actionEl.getElementsByTagName("result");
+			for (int j = 0; j < resultNodeList.getLength(); j++) {
+				Element resultEl = (Element) resultNodeList.item(i);
+				String resultName = resultEl.getAttribute("name");
+				String type = resultEl.getAttribute("type");
+				String path = resultEl.getTextContent();
+				Map<String, ActionResult> map = new HashMap<>();
+				map.put(resultName, new ActionResult(resultName, type, path));
+				config.setMap(map);
+			}
 		}
 		System.out.println(actionConfigs);
 	}
@@ -96,7 +107,19 @@ public class ActionFilter implements Filter{
 			Class actionName = Class.forName(className);
 			Object newInstance = actionName.newInstance();
 			Method method2 = actionName.getMethod(method);
-			method2.invoke(newInstance);
+			String viewName = (String) method2.invoke(newInstance);
+			Map<String, ActionResult> map = actionConfig.getMap();
+			ActionResult actionResult = map.get(viewName);
+			if (actionResult != null) {
+				String name = actionResult.getName();
+				String type = actionResult.getType();
+				String path = actionResult.getPath();
+				if ("dispatcher".equals(type)) {
+					req.getRequestDispatcher(path).forward(req, resp);
+				} else if("redirect".equals(type)) {
+					resp.sendRedirect(req.getContextPath() + path);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

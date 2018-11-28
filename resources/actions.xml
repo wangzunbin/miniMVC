@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
-	<action name="department" className="com.wangzunbin.crm.web.action.DepartmentAction" method="execute"/>
+	<action name="department" className="com.wangzunbin.crm.web.action.DepartmentAction" method="execute">
+		<result name="list" type="dispatcher">/WEB-INF/views/department/list.jsp</result>
+		<result name="input" type="redirect">/WEB-INF/views/department/input.jsp</result>
+	</action>
 	<action name="employee" className="com.wangzunbin.crm.web.action.EmployeeAction" method="execute"/>
 </actions>
